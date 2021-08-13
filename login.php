@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
+<?php include 'connexion.php'; ?>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,42 +40,61 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Bienvenue !</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" method="post" action="">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
+                                            <input type="email" name="email" class="form-control form-control-user"
+                                                id="email" aria-describedby="emailHelp"
+                                                placeholder="Mon adresse mail">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                            <input type="password" name="pass" class="form-control form-control-user"
+                                                id="pass" placeholder="Mot de passe">
                                         </div>
                                         <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
+                                          
                                         </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </a>
+                                        <input type="submit" name="connexion" value="Connexion" class="btn btn-primary btn-user btn-block">
                                         <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a>
+                                        <!-- <a href="index.html" class="btn btn-google btn-user btn-block">
+                                            <i class="fab fa-google fa-fw"></i> Connexion via Google
+                                        </a> -->
+                                        
                                     </form>
-                                    <hr>
+                                    <?php 
+                                     if(isset($_POST['connexion'])) {
+                                        $email = $_POST['email'];
+                                        $pass = $_POST['pass'];
+                                          //  Récupération de l'utilisateur et de son pass hashé
+        $req = $pdo->prepare('SELECT * FROM `user` WHERE email = :email');
+        $req->execute(array('email' => $email));
+        $resultat = $req->fetch();
+        
+        // Comparaison du pass envoyé via le formulaire avec la base
+        if(password_verify($pass, $resultat['mdp'])) {
+            session_start();
+             $_SESSION['id'] = $resultat['id'];
+             $_SESSION['prenom'] = $resultat['prenom'];
+             $_SESSION['nom'] = $resultat['nom'];
+             $_SESSION['email'] = $email;
+            header("Location: index.php");
+            exit();
+
+        }
+        else {
+            echo '<div class="card mb-4 py-3 border-left-danger"><div class="card-body">Mauvais identifiant ou mot de passe !</div></div> <br>';
+        }
+    }
+
+                                     ?>
+
+                                    <!-- <hr> -->
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                        <a class="small" href="forgot-password.html">Mot de passe oublié ?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
+                                        <a class="small" href="register">Je veux créé mon compte !</a>
                                     </div>
                                 </div>
                             </div>

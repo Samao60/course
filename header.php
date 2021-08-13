@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
-
+<?php include 'verif_session.php'; ?>
 <head>
 
     <meta charset="utf-8">
@@ -19,13 +19,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <?php $host = 'localhost';
-$dbname = 'course';
-$username = 'root';
-$password = '';
-  $dsn = "mysql:host=$host;dbname=$dbname";
-  $pdo = new PDO($dsn, $username, $password);
-?>
+
 </head>
 
 <body id="page-top">
@@ -160,7 +154,7 @@ $password = '';
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['prenom'];?> <?php echo $_SESSION['nom']; ?></span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>

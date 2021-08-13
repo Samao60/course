@@ -1,6 +1,6 @@
-<?php include "header.php";?>
+<?php include "header.php";
+include 'connexion.php'; ?>
 <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
  <!-- Begin Page Content -->
  <div class="container-fluid">
     <!-- Add categorie Modal-->
@@ -26,6 +26,8 @@
                     </form>
                     <!-- Envoi en BDD -->
                     <?php if(isset($_POST['envoi'])) {
+                        //connexion à la bdd
+                        
                         //recupération des valeurs
                         $cat_name = $_POST['cat_name'];
                         $cat_description = $_POST['cat_description'];
