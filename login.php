@@ -78,7 +78,7 @@
              $_SESSION['prenom'] = $resultat['prenom'];
              $_SESSION['nom'] = $resultat['nom'];
              $_SESSION['email'] = $email;
-            header("Location: index.php");
+            header("Location: index");
             exit();
 
         }
