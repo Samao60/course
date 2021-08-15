@@ -2,7 +2,7 @@
 <html lang="fr">
 
 <head>
-<?php include 'connexion.php'; ?>
+    <?php include 'connexion.php'; ?>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,9 +14,7 @@
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -44,50 +42,45 @@
                                     </div>
                                     <form class="user" method="post" action="">
                                         <div class="form-group">
-                                            <input type="email" name="email" class="form-control form-control-user"
-                                                id="email" aria-describedby="emailHelp"
-                                                placeholder="Mon adresse mail">
+                                            <input type="email" name="email" class="form-control form-control-user" id="email" aria-describedby="emailHelp" placeholder="Mon adresse mail">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name="pass" class="form-control form-control-user"
-                                                id="pass" placeholder="Mot de passe">
+                                            <input type="password" name="pass" class="form-control form-control-user" id="pass" placeholder="Mot de passe">
                                         </div>
                                         <div class="form-group">
-                                          
+
                                         </div>
                                         <input type="submit" name="connexion" value="Connexion" class="btn btn-primary btn-user btn-block">
                                         <hr>
                                         <!-- <a href="index.html" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Connexion via Google
                                         </a> -->
-                                        
+
                                     </form>
-                                    <?php 
-                                     if(isset($_POST['connexion'])) {
+                                    <?php
+                                    if (isset($_POST['connexion'])) {
                                         $email = $_POST['email'];
                                         $pass = $_POST['pass'];
-                                          //  Récupération de l'utilisateur et de son pass hashé
-        $req = $pdo->prepare('SELECT * FROM `user` WHERE email = :email');
-        $req->execute(array('email' => $email));
-        $resultat = $req->fetch();
-        
-        // Comparaison du pass envoyé via le formulaire avec la base
-        if(password_verify($pass, $resultat['mdp'])) {
-            session_start();
-             $_SESSION['id'] = $resultat['id'];
-             $_SESSION['prenom'] = $resultat['prenom'];
-             $_SESSION['nom'] = $resultat['nom'];
-             $_SESSION['email'] = $email;
-            header("Location: index");
-            exit();
+                                        //  Récupération de l'utilisateur et de son pass hashé
+                                        $req = $pdo->prepare('SELECT * FROM `user` WHERE email = :email');
+                                        $req->execute(array('email' => $email));
+                                        $resultat = $req->fetch();
 
-        }
-        else {
-            echo '<div class="card mb-4 py-3 border-left-danger"><div class="card-body">Mauvais identifiant ou mot de passe !</div></div> <br>';
-        }
-    }
+                                        // Comparaison du pass envoyé via le formulaire avec la base
+                                        if (password_verify($pass, $resultat['mdp'])) {
+                                            session_start();
+                                            $_SESSION['id'] = $resultat['id'];
+                                            $_SESSION['prenom'] = $resultat['prenom'];
+                                            $_SESSION['nom'] = $resultat['nom'];
+                                            $_SESSION['email'] = $email;
+                                            header("Location: index");
+                                            exit();
+                                        } else {
+                                            echo '<div class="card mb-4 py-3 border-left-danger"><div class="card-body">Mauvais identifiant ou mot de passe !</div></div> <br>';
+                                        }
+                                    }
 
-                                     ?>
+                                    ?>
 
                                     <!-- <hr> -->
                                     <div class="text-center">

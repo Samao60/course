@@ -4,22 +4,22 @@ include 'connexion.php'; ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
     <!-- Add categorie Modal-->
-    <div class="modal fade" id="addcatmodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="addtypemodal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Vous voulez ajouter une catégorie ?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Vous voulez ajouter un type d'aliment ?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="envoicat" action="" method="post">
+                    <form id="envoitype" action="" method="post">
                         <div class="form-groug" style="margin-bottom: 1rem;">
-                            <input type="text" class="form-control" id="cat_name" name="cat_name" placeholder="Nom de la catégorie">
+                            <input type="text" class="form-control" id="type_name" name="type_name" placeholder="Nom du type d'aliment">
                         </div>
                         <div class="form-groug" style="margin-bottom: 1rem;">
-                            <textarea name="cat_description" id="cat_descrpition" placeholder="Description de la catégorie" class="form-control"></textarea>
+                            <textarea name="type_description" id="type_descrpition" placeholder="Description du type d'aliment" class="form-control"></textarea>
                         </div>
                         <button type="submit" class="btn btn-success" id="envoi" name='envoi'>Valider</button>
                     </form>
@@ -28,12 +28,12 @@ include 'connexion.php'; ?>
                         //connexion à la bdd
 
                         //recupération des valeurs
-                        $cat_name = $_POST['cat_name'];
-                        $cat_description = $_POST['cat_description'];
+                        $type_name = $_POST['type_name'];
+                        $type_description = $_POST['type_description'];
                         //Requête
-                        $sql = 'INSERT INTO `course`.`categorie` (`nom`, `description`) VALUES (:nom,:description)';
+                        $sql = 'INSERT INTO `course`.`type` (`nom`, `description`) VALUES (:nom,:description)';
                         $res = $pdo->prepare($sql);
-                        $exec = $res->execute(array(':nom' => $cat_name, ':description' => $cat_description));
+                        $exec = $res->execute(array(':nom' => $type_name, ':description' => $type_description));
 
                         if ($exec) {
                             echo 'Données insérées';
@@ -48,18 +48,18 @@ include 'connexion.php'; ?>
         </div>
     </div>
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Les catégories</h1>
-    <p class="mb-4"> <a href="#" class="btn btn-success btn-icon-split" data-toggle="modal" data-target="#addcatmodal">
+    <h1 class="h3 mb-4 text-gray-800">Les types d'aliments</h1>
+    <p class="mb-4"> <a href="#" class="btn btn-success btn-icon-split" data-toggle="modal" data-target="#addtypemodal">
             <span class="icon text-white-50">
                 <i class="fas fa-plus"></i>
             </span>
-            <span class="text">Ajouter une catégorie</span>
+            <span class="text">Ajouter un type d'aliment</span>
         </a></p>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Les catégories existante</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Les types d'aliments</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -82,7 +82,7 @@ include 'connexion.php'; ?>
                     </tfoot>
                     <tbody>
                         <?php
-                        $categorie = $pdo->query('SELECT * FROM categorie');
+                        $categorie = $pdo->query('SELECT * FROM type');
                         $categorie->execute();
                         while ($donnees = $categorie->fetch()) {
                         ?>
@@ -92,38 +92,12 @@ include 'connexion.php'; ?>
                                 <td><a href="#" data-toggle="modal" data-target="#modifcatmodal" class="btn btn-warning btn-circle btn-sm">
                                         <i class="fas fa-cogs"></i>
                                     </a></td>
-                                <td><a href="suppr_cat?id=<?php echo $donnees['id']; ?>" class="btn btn-danger btn-circle btn-sm">
+                                <td><a href="suppr_type?id=<?php echo $donnees['id']; ?>" class="btn btn-danger btn-circle btn-sm">
                                         <i class="fas fa-trash"></i>
                                     </a></td>
                             </tr>
 
-                            <!-- Add categorie Modal-->
-                            <div class="modal fade" id="modifcatmodal" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Vous voulez modifier la catégorie ?</h5>
-                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form id="modifcat" action="modifcat.php" method="post">
-                                                <div class="form-groug" style="margin-bottom: 1rem;">
-                                                    <input type="text" class="form-control" id="cat_modif_name" name="cat_modif_name" value="<?php echo $donnees['nom']; ?>" placeholder="Nom de la catégorie">
-                                                    <input type="hidden" name="catid" value="<?php echo $donnees['id']; ?>">
-                                                </div>
-                                                <div class="form-groug" style="margin-bottom: 1rem;">
-                                                    <textarea name="cat_modif_descrpition" id="cat_modif_descrpition" placeholder="Description de la catégorie" class="form-control"><?php echo $donnees['description']; ?></textarea>
-                                                </div>
-                                                <button type="submit" class="btn btn-success" id="envoi" name='envoimodif'>Valider</button>
-                                            </form>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
+                        
                         <?php
 
 
@@ -147,6 +121,6 @@ include 'connexion.php'; ?>
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
     }
-    $("#envoicat").submit().location.reload;
+    $("#envoi").submit().location.reload;
 </script>
 <?php include "footer.php"; ?>
