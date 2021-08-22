@@ -1,6 +1,6 @@
-<?php include "header.php";
-include 'connexion.php'; ?>
-<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<?php include "../header.php";
+include '../connexion.php'; ?>
+<link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <!-- Begin Page Content -->
 <div class="container-fluid">
     <!-- Add categorie Modal-->
@@ -8,7 +8,7 @@ include 'connexion.php'; ?>
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Vous voulez ajouter un type d'aliment ?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Vous voulez ajouter un espace de stockage ?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -16,10 +16,10 @@ include 'connexion.php'; ?>
                 <div class="modal-body">
                     <form id="envoitype" action="" method="post">
                         <div class="form-groug" style="margin-bottom: 1rem;">
-                            <input type="text" class="form-control" id="type_name" name="type_name" placeholder="Nom du type d'aliment">
+                            <input type="text" class="form-control" id="stock_name" name="stock_name" placeholder="Nom de l'espace de stockage">
                         </div>
                         <div class="form-groug" style="margin-bottom: 1rem;">
-                            <textarea name="type_description" id="type_descrpition" placeholder="Description du type d'aliment" class="form-control"></textarea>
+                            <textarea name="stock_description" id="stock_description" placeholder="Description de l'espace de stockage" class="form-control"></textarea>
                         </div>
                         <button type="submit" class="btn btn-success" id="envoi" name='envoi'>Valider</button>
                     </form>
@@ -28,12 +28,12 @@ include 'connexion.php'; ?>
                         //connexion à la bdd
 
                         //recupération des valeurs
-                        $type_name = $_POST['type_name'];
-                        $type_description = $_POST['type_description'];
+                        $type_name = $_POST['stock_name'];
+                        $type_description = $_POST['stock_description'];
                         //Requête
-                        $sql = 'INSERT INTO `course`.`type` (`nom`, `description`) VALUES (:nom,:description)';
+                        $sql = 'INSERT INTO `course`.`stockage` (`nom_stockage`, `description`, `id_user`) VALUES (:nom,:description,:id_user)';
                         $res = $pdo->prepare($sql);
-                        $exec = $res->execute(array(':nom' => $type_name, ':description' => $type_description));
+                        $exec = $res->execute(array(':nom' => $type_name, ':description' => $type_description, ':id_user' => $_SESSION['id']));
 
                         if ($exec) {
                             echo 'Données insérées';
@@ -48,18 +48,18 @@ include 'connexion.php'; ?>
         </div>
     </div>
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Les types d'aliments</h1>
+    <h1 class="h3 mb-4 text-gray-800">Gestion des espaces de stockage</h1>
     <p class="mb-4"> <a href="#" class="btn btn-success btn-icon-split" data-toggle="modal" data-target="#addtypemodal">
             <span class="icon text-white-50">
                 <i class="fas fa-plus"></i>
             </span>
-            <span class="text">Ajouter un type d'aliment</span>
+            <span class="text">Ajouter un espace de stockage</span>
         </a></p>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Les types d'aliments</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Mes espaces de stockage</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -82,22 +82,22 @@ include 'connexion.php'; ?>
                     </tfoot>
                     <tbody>
                         <?php
-                        $categorie = $pdo->query('SELECT * FROM type');
+                        $categorie = $pdo->query('SELECT * FROM stockage WHERE `id_user` = "'.$_SESSION['id'].'"');
                         $categorie->execute();
                         while ($donnees = $categorie->fetch()) {
                         ?>
                             <tr>
-                                <td><?php echo $donnees['nom']; ?></td>
+                                <td><?php echo $donnees['nom_stockage']; ?></td>
                                 <td><?php echo $donnees['description']; ?></td>
-                                <td><a href="#" data-toggle="modal" data-target="#modifcatmodal" class="btn btn-warning btn-circle btn-sm">
+                                <td><a href="modif_stockage?id=<?php echo $donnees['id']; ?>" class="btn btn-warning btn-circle btn-sm">
                                         <i class="fas fa-cogs"></i>
                                     </a></td>
-                                <td><a href="suppr_type?id=<?php echo $donnees['id']; ?>" class="btn btn-danger btn-circle btn-sm">
+                                <td><a href="suppr_stockage?id=<?php echo $donnees['id']; ?>" class="btn btn-danger btn-circle btn-sm">
                                         <i class="fas fa-trash"></i>
                                     </a></td>
                             </tr>
 
-                        
+                          
                         <?php
 
 
@@ -117,10 +117,5 @@ include 'connexion.php'; ?>
 
 </div>
 
-<script>
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-    }
-    $("#envoi").submit().location.reload;
-</script>
-<?php include "footer.php"; ?>
+
+<?php include "../footer.php"; ?>

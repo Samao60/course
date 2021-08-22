@@ -1,6 +1,7 @@
+<?php include 'verif_session.php'; ?>
+
 <!DOCTYPE html>
 <html lang="fr">
-<?php include 'verif_session.php'; ?>
 
 <head>
 
@@ -9,14 +10,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/scss/custom.css" rel="stylesheet">
 
 </head>
 
@@ -29,7 +33,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/index">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-shopping-cart"></i>
                 </div>
@@ -41,7 +45,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index">
+                <a class="nav-link" href="/index">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Tableau de bord</span></a>
             </li>
@@ -58,13 +62,13 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-utensils"></i>
-                    <span>Mon frigo</span>
+                    <span>Mes stockages</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Les aliments</h6>
-                        <a class="collapse-item" href="addaliment">Ajouter un aliments</a>
-                        <a class="collapse-item" href="cards.html">Voir le contenu du frigo</a>
+                        <a class="collapse-item" href="/aliments/ajouter-un-aliment">Ajouter un aliments</a>
+                        <a class="collapse-item" href="/aliments/contenu-du-stockage">Contenu des stockage</a>
                     </div>
                 </div>
             </li>
@@ -73,13 +77,13 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Gestion des catégorie</span>
+                    <span>Paramètres</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Gestion des catégorie</h6>
-                        <a class="collapse-item" href="categorie">Les catégories</a>
-                        <a class="collapse-item" href="type-aliments">Les type d'aliments</a>
+                        <h6 class="collapse-header">Paramètres</h6>
+                        <a class="collapse-item" href="/categorie/categorie">Les catégories</a>
+                        <a class="collapse-item" href="/stockage/gestion-des-stockages.php">Espace de stockage</a>
                     </div>
                 </div>
             </li>
@@ -145,11 +149,11 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['prenom']; ?> <?php echo $_SESSION['nom']; ?></span>
-                                <img class="img-profile rounded-circle" src="upload/profil/<?php echo $_SESSION['nom'];?>.<?php echo $_SESSION['prenom'];?>/profil.jpg">
+                                <img class="img-profile rounded-circle" src="/upload/profil/<?php echo $_SESSION['nom']; ?>.<?php echo $_SESSION['prenom']; ?>/profil.jpg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="profil">
+                                <a class="dropdown-item" href="/profil">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Gestion du compte
                                 </a>

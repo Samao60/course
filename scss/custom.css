@@ -1,5 +1,13 @@
-input.form-control.file {
-    padding: 0;
-    height: 100%;
-    line-height: 1.8rem;
+td {
+    color: black !important;
+}
+
+td.danger {
+    font-weight: bold;
+    color: red !important;
+}
+
+td.warning{
+    font-weight: bold;
+    color: #f4b30d !important
 }
